@@ -1,0 +1,116 @@
+{% extends 'navbar.html' %}
+{% block title %}View Blog - My Blog{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom CSS for styling */
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+    }
+
+    .blog-post {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .blog-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .blog-author {
+        font-style: italic;
+        color: #666;
+        margin-bottom: 10px;
+    }
+
+    .blog-date {
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .blog-content {
+        line-height: 1.6;
+    }
+
+    .comment-container {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .comment-section {
+        margin-top: 20px;
+    }
+
+    .comment-form {
+        margin-top: 20px;
+    }
+
+    .toggle-comments-btn {
+        margin-top: 20px;
+    }
+
+    .comment {
+        margin-bottom: 10px;
+    }
+
+    .comment-author {
+        font-weight: bold;
+    }
+    .back-btn {
+        margin-top: 20px;
+    }
+    /* New styles for viewing comments */
+    .comments {
+        margin-top: 20px;
+    }
+
+    .comment {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f0f0f0;
+        margin-bottom: 10px;
+    }
+
+    .comment-author {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="blog-post">
+        <h2 class="blog-title">{{ blog_post.title }}</h2>
+        <p class="blog-author">Author: {{ blog_post.user.username }}</p>
+        <p class="blog-date">Created Date: {{ blog_post.created_at }}</p>
+        <div class="blog-content">
+            {{ blog_post.content | safe }}
+        </div>
+        
+    </div>
+
+    <!-- View all comments -->
+    <div class="comments">
+        <h3>All Comments</h3>
+        {% for comment in blog_post.comments.all %}
+        <div class="comment">
+            <p class="comment-author">Author: {{ comment.user.username }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'blogs' %}" class="btn btn-success back-btn">&laquo; Back</a>
+</div>
+{% endblock %}
